@@ -1,5 +1,13 @@
+import Header from "./components/Header";
+import Home from "./pages/home/Home";
+import './App.css';
 function App() {
-  return (<h1>Wheelz</h1>);
+  return (
+    <>
+    <Header></Header>
+    <Home></Home>
+    </>
+    );
 }
 
 export default App;
