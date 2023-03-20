@@ -10,7 +10,7 @@ import {
 
 const Footer = () => {
   return (
-    <Box my={1} sx={{ flexGrow: 1}}>
+    <Box my={1} mt={5} sx={{ flexGrow: 1}}>
       <AppBar position="static">
         <Toolbar>
           <IconButton
