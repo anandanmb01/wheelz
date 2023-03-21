@@ -5,6 +5,7 @@ import { useState } from "react";
 import CardHome from "../home/CardHome";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import ProductSpec from "./ProductSpec";
 
 const product = {
   name: "Vehicle",
@@ -95,21 +96,24 @@ const Product = () => {
               onChange={handleAlignment}
               aria-label="text alignment"
             >
-              <ToggleButton value="left" aria-label="left aligned" >
+              <ToggleButton value="left" aria-label="left aligned">
                 <TimeToLeaveIcon />
               </ToggleButton>
-              <ToggleButton value="center" aria-label="centered" >
-                <TimeToLeaveIcon color="success"/>
+              <ToggleButton value="center" aria-label="centered">
+                <TimeToLeaveIcon color="success" />
               </ToggleButton>
-              <ToggleButton value="right" aria-label="right aligned" >
-                <TimeToLeaveIcon color="action"/>
-              </ToggleButton> 
+              <ToggleButton value="right" aria-label="right aligned">
+                <TimeToLeaveIcon color="action" />
+              </ToggleButton>
               <ToggleButton value="right" aria-label="right aligned">
                 <TimeToLeaveIcon />
               </ToggleButton>
             </ToggleButtonGroup>
           </Grid>
         </Grid>
+        <Paper sx={{mt:1}}>
+          <ProductSpec/>
+        </Paper>
       </Paper>
 
       <p
