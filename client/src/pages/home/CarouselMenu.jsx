@@ -17,7 +17,7 @@ function CarouselMenu(props)
 function Item(props) {
   return (
     <Paper>
-      <Box container>
+      <Box >
         {/* <Typography variant="h6" component="div">
           {props.item.name}
         </Typography> */}

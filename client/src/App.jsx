@@ -1,5 +1,5 @@
 import {React,useContext} from "react";
-import Header from "./components/Header/Header";
+import Header from "./components/Header/Header"
 import Home from "./pages/home/Home";
 import "./App.css";
 import Footer from "./components/Footer";
@@ -8,19 +8,24 @@ import CategoryProductList from "./pages/Category/CategoryProductList";
 import CartPage from "./pages/Cart/CartPage";
 import { AuthProvider } from "./context/AuthContext";
 import { AuthContext } from "./context/AuthContext";
+import { Routes, Route } from "react-router-dom";
+
 
 function App() {
 
-  // const [authStatus,setAuthStatus] = useContext(AuthContext);
+  const {authStatus,setAuthStatus} = useContext(AuthContext);
 
   return (
     <>
       <AuthProvider>
         <Header />
-        <Home/>
-        <Product/>
-        <CategoryProductList/>
-        <CartPage />
+        <Routes>
+        <Route exact path="/" element={<Home/>} />
+        <Route path="/section/:sectionId" element={authStatus?<CategoryProductList/>:<Home/>} />
+          {/* <Product/>
+          <CategoryProductList/>
+          <CartPage /> */}
+        </Routes>
         <Footer />
       </AuthProvider>
     </>

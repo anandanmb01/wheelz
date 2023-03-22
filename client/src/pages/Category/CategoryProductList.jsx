@@ -62,7 +62,8 @@ var Carousel_items = [
   },
 ];
 
-const CategoryProductList = () => {
+const CategoryProductList = (props) => {
+  // console.log(props.match.params.sectionId);
   return (
     <>
       <p

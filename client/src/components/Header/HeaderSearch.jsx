@@ -16,7 +16,7 @@ export default function HeaderSearch() {
   const [options, setOptions] = React.useState([]);
   const loading = open && options.length === 0;
 
-    console.log(options);
+    // console.log(options);
 
   React.useEffect(() => {
     let active = true;
