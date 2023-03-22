@@ -23,10 +23,13 @@ const CartPage = () => {
 
       <Grid container spacing={2}>
         <Grid item xs={9}>
-          <Paper elevation={1} sx={{ p: 2, height: "500px" }}>
+          <Paper elevation={1} sx={{ p: 2, minHeight: "500px" }}>
             <Stack direction={"column"} spacing={2}>
               <MediaHeader />
               <Divider/>
+              <MediaCard />
+              <MediaCard />
+              <MediaCard />
               <MediaCard />
             </Stack>
           </Paper>

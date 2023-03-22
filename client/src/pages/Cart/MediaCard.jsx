@@ -65,8 +65,8 @@ function MediaCard() {
             <IconButton color="primary" sx={{ borderRadius: 0, color: "grey" }}>
               <RemoveIcon />
             </IconButton>
-            <TextField focused color="grey" />
-            <IconButton color="primary" sx={{ borderRadius: 0, color: "grey" }}>
+            <TextField focused color="grey" size="small"/>
+            <IconButton color="primary"  sx={{ borderRadius: 0, color: "grey" }}>
               <AddIcon />
             </IconButton>
           </ButtonGroup>
