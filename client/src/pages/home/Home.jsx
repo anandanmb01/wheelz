@@ -2,6 +2,7 @@ import React from "react";
 import CarouselMenu from "./CarouselMenu";
 import Grid from "@mui/material/Grid";
 import CardHome from "./CardHome";
+import Notification from "../../components/Notification";
 
 const seriesdb = {
   series: [
@@ -74,6 +75,7 @@ var Carousel_items = [
 const Home = () => {
   return (
     <>
+    <Notification/>
       <CarouselMenu items={Carousel_items} />
       <p
         style={{

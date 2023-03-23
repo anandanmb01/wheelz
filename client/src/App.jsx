@@ -1,5 +1,5 @@
-import {React,useContext} from "react";
-import Header from "./components/Header/Header"
+import { React, useContext } from "react";
+import Header from "./components/Header/Header";
 import Home from "./pages/home/Home";
 import "./App.css";
 import Footer from "./components/Footer";
@@ -7,28 +7,39 @@ import Product from "./pages/Product/Product";
 import CategoryProductList from "./pages/Category/CategoryProductList";
 import CartPage from "./pages/Cart/CartPage";
 import { AuthProvider } from "./context/AuthContext";
-import { AuthContext } from "./context/AuthContext";
+// import { AuthContext } from "./context/AuthContext";
 import { Routes, Route } from "react-router-dom";
+import { NotificationPropProvider } from "./context/NotificationPropContext";
+// import Notification from "./components/Notification";
 
+window.serverUrl = "http://127.0.0.1:5000";
 
 function App() {
-
-  const {authStatus,setAuthStatus} = useContext(AuthContext);
+  // const { authStatus, setAuthStatus } = useContext(AuthContext);
 
   return (
     <>
+      {/* <Notification /> */}
       <AuthProvider>
-        <Header />
-        <Routes>
-        <Route exact path="/" element={<Home/>} />
-        <Route path="/cart" element={true?<CartPage/>:<Home/>} />
-        <Route path="/section/:sectionName" element={true?<CategoryProductList/>:<Home/>} />
-        <Route path="/product/:productId" element={true?<Product/>:<Home/>} />
-          {/* <Product/> */}
-          {/* <CategoryProductList/> */}
-          {/* <CartPage /> */}
-        </Routes>
-        <Footer />
+        <NotificationPropProvider>
+          <Header />
+          <Routes>
+            <Route exact path="/" element={<Home />} />
+            <Route path="/cart" element={true ? <CartPage /> : <Home />} />
+            <Route
+              path="/section/:sectionName"
+              element={true ? <CategoryProductList /> : <Home />}
+            />
+            <Route
+              path="/product/:productId"
+              element={true ? <Product /> : <Home />}
+            />
+            {/* <Product/> */}
+            {/* <CategoryProductList/> */}
+            {/* <CartPage /> */}
+          </Routes>
+          <Footer />
+        </NotificationPropProvider>
       </AuthProvider>
     </>
   );

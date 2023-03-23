@@ -16,7 +16,7 @@ import HeaderSearch from "./HeaderSearch";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { AuthContext } from "../../context/AuthContext";
 import SignInModal from "../../pages/Signin/SignInModal";
-
+import Notification from "../Notification";
 const Header = () => {
   // eslint-disable-next-line
   const { authStatus: auth, setAuthStatus } = useContext(AuthContext);
@@ -37,6 +37,7 @@ const Header = () => {
 
   return (
     <>
+    <Notification/>
       <SignInModal state={showSignIn} setState={closeSignInModal} />
       <Box my={1} sx={{ flexGrow: 1 }}>
         <AppBar position="static">

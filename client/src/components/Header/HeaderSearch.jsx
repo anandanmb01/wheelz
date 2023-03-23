@@ -2,7 +2,6 @@ import * as React from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import CircularProgress from "@mui/material/CircularProgress";
-import { Box } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 function sleep(delay = 0) {

@@ -9,36 +9,40 @@ router.all("/", (req, res) => {
   res.send("auth route");
 });
 
+router.post('/checkmail',(req,res)=>{
+  userModel.findOne({ email:req.body.email},{_id:1})
+  .then((d)=>{
+    res.status(200).send(d)
+  })
+  .catch((e)=>{console.log(e)})
+})
+
 router.post("/register", (req, res) => {
   const user = new userModel({
-    username: req.body.username,
+    email: req.body.email,
     password: hashSync(req.body.password, 10),
+    firstName:req.body.firstName,
+    lastName:req.body.lastName,
   });
-
+  
   user
     .save()
     .then((user) => {
-      res.send({
+      res.status(200).send({
         success: true,
-        message: "User created successfully.",
-        user: {
-          id: user._id,
-          username: user.username,
-        },
       });
     })
     .catch((err) => {
-      res.send({
+      console.log(err)
+      res.status(500).send({
         success: false,
-        message: "Something went wrong",
-        error: err,
       });
     });
 });
 
 router.post("/login", async (req, res) => {
   await userModel
-    .findOne({ username: req.body.username })
+    .findOne({ email: req.body.email })
     .exec()
     .then((user) => {
       //No user found
@@ -58,7 +62,7 @@ router.post("/login", async (req, res) => {
       }
 
       const payload = {
-        username: user.username,
+        email: user.email,
         id: user._id,
       };
 

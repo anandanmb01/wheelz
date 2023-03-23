@@ -1,9 +1,7 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import Backdrop from "@mui/material/Backdrop";
-import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import Typography from "@mui/material/Typography";
 import { useSpring, animated } from "@react-spring/web";
 import SignIn from '../../pages/Signin/SignIn'
 import { Paper } from "@mui/material";
@@ -85,7 +83,7 @@ export default function SignInModal(props) {
       >
         <Fade in={open}>
           <Paper sx={{...style,borderWidth:0,width:{sm:'70vw',lg:'40vw'}}}>
-          {showSignIn? <SignIn showSignUp_={setShowSignIn}/> : <SignUp showSignIn_={setShowSignIn}/>}
+          {showSignIn? <SignIn showSignUp_={setShowSignIn} handleClose={handleClose}/> : <SignUp showSignIn_={setShowSignIn} handleClose={handleClose}/>}
             
             
           </Paper>
