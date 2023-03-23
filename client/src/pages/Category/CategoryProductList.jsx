@@ -2,6 +2,7 @@ import React from "react";
 import Grid from "@mui/material/Grid";
 import CardHome from "../home/CardHome";
 import { Box } from "@mui/material";
+import { useParams } from "react-router-dom";
 
 const seriesdb = {
   series: [
@@ -63,7 +64,8 @@ var Carousel_items = [
 ];
 
 const CategoryProductList = (props) => {
-  // console.log(props.match.params.sectionId);
+  console.log(useParams());
+
   return (
     <>
       <p
@@ -74,7 +76,6 @@ const CategoryProductList = (props) => {
       >
         Category Name
       </p>
-
       <Box
         component={"img"}
         src={Carousel_items[0].imgsrc}

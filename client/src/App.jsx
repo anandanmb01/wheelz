@@ -21,10 +21,12 @@ function App() {
         <Header />
         <Routes>
         <Route exact path="/" element={<Home/>} />
-        <Route path="/section/:sectionId" element={authStatus?<CategoryProductList/>:<Home/>} />
-          {/* <Product/>
-          <CategoryProductList/>
-          <CartPage /> */}
+        <Route path="/cart" element={true?<CartPage/>:<Home/>} />
+        <Route path="/section/:sectionName" element={true?<CategoryProductList/>:<Home/>} />
+        <Route path="/product/:productId" element={true?<Product/>:<Home/>} />
+          {/* <Product/> */}
+          {/* <CategoryProductList/> */}
+          {/* <CartPage /> */}
         </Routes>
         <Footer />
       </AuthProvider>
