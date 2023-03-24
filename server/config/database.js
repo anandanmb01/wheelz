@@ -12,8 +12,37 @@ const userSchema = new mongoose.Schema({
   googleId: "string",
   facebookId: "string",
   orders: "object",
+  vendor: "object",
 });
 const userModel = mongoose.model("user", userSchema);
 
+const carCategorySchema = new mongoose.Schema({
+  name: "string",
+  desc: "string",
+  imgUrl: "string",
+});
+const carCategoryModel = mongoose.model("carCategory", carCategorySchema);
 
-module.exports = userModel;
+const carouselSchema = new mongoose.Schema({
+  name: "string",
+  desc: "string",
+  imgUrl: "string",
+});
+const carouselModel = mongoose.model("carousel", carouselSchema);
+
+const carSchema = new mongoose.Schema({
+  name: "string",
+  enable: "string",
+  catId: "string",
+  rating: "string",
+  vendor: "object",
+  imgUrl: "object",
+  desc: "string",
+  remark: "string",
+  discount: "string",
+  price: "string",
+  newArrival: "boolean",
+});
+const carModel = mongoose.model("car", carSchema);
+
+module.exports = { userModel, carCategoryModel, carouselModel, carModel };

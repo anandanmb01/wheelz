@@ -14,6 +14,8 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { NotificationPropContext } from "../../context/NotificationPropContext";
+import { AuthContext } from "../../context/AuthContext";
+import {UserContext} from "../../context/UserContext";
 
 function Copyright(props) {
   return (
@@ -50,6 +52,8 @@ export default function SignIn(props) {
   const { notificationProp, setNotificationProp } = React.useContext(
     NotificationPropContext
   );
+  const { setAuthStatus } = React.useContext(AuthContext);
+  const { user, setUser } = React.useContext(UserContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -73,6 +77,10 @@ export default function SignIn(props) {
               message: d.data.message,
             };
           });
+          setAuthStatus(true);
+          setUser(d.data.user);
+          window.token=d.data.token;
+          window.localStorage.setItem('token',d.data.token);
         }
       })
       .catch((e) => {
@@ -83,6 +91,8 @@ export default function SignIn(props) {
             message: e.response.data.message,
           };
         });
+        setAuthStatus(false);
+        setUser({});
       });
   };
 
@@ -156,7 +166,7 @@ export default function SignIn(props) {
               autoComplete="current-password"
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={<Checkbox value="remember" color="primary" defaultChecked />}
               label="Remember me"
             />
             <Button

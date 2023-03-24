@@ -17,11 +17,18 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { AuthContext } from "../../context/AuthContext";
 import SignInModal from "../../pages/Signin/SignInModal";
 import Notification from "../Notification";
+import { UserContext } from "../../context/UserContext";
+import SignOutModal from "./SignOutModal";
+
+
 const Header = () => {
   // eslint-disable-next-line
   const { authStatus: auth, setAuthStatus } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [showSignIn, setShowSignIn] = useState(false);
+  const { user } = useContext(UserContext)
+  const [showSignOut,setShowSignOut] = React.useState(false);
+
 
   const closeSignInModal = () => {
     setShowSignIn(false);
@@ -35,9 +42,15 @@ const Header = () => {
     setAnchorEl(null);
   };
 
+  function handeSignOut(){
+    setAnchorEl(null);
+    setShowSignOut(true);
+  };
+
   return (
     <>
-    <Notification/>
+    <SignOutModal showSignOut={showSignOut} setShowSignOut={setShowSignOut}/>
+      <Notification />
       <SignInModal state={showSignIn} setState={closeSignInModal} />
       <Box my={1} sx={{ flexGrow: 1 }}>
         <AppBar position="static">
@@ -124,7 +137,7 @@ const Header = () => {
                           <AccountCircle sx={{ width: 32, height: 32 }} />
                         </IconButton>
                         <Typography variant="body1" sx={{ mx: 1 }}>
-                          username
+                          {`${user.firstName} ${user.lastName}`}
                         </Typography>
                       </Stack>
                     </Stack>
@@ -133,18 +146,15 @@ const Header = () => {
                       anchorEl={anchorEl}
                       anchorOrigin={{
                         vertical: "bottom",
-                        horizontal: "center",
-                      }}
-                      keepMounted
-                      transformOrigin={{
-                        vertical: "top",
                         horizontal: "right",
                       }}
+                      keepMounted
                       open={Boolean(anchorEl)}
                       onClose={handleClose}
                     >
                       <MenuItem onClick={handleClose}>Profile</MenuItem>
                       <MenuItem onClick={handleClose}>My account</MenuItem>
+                      <MenuItem onClick={handeSignOut}>Sign out</MenuItem>
                     </Menu>
                   </div>
                 ) : (

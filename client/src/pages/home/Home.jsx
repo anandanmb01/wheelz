@@ -3,6 +3,9 @@ import CarouselMenu from "./CarouselMenu";
 import Grid from "@mui/material/Grid";
 import CardHome from "./CardHome";
 import Notification from "../../components/Notification";
+import CategoryCard from "./CategoryCard";
+import axios from "axios";
+import axiosConfig from "../../utilities/axiosConfig";
 
 const seriesdb = {
   series: [
@@ -39,44 +42,77 @@ const seriesdb = {
   ],
 };
 
-var Carousel_items = [
-  {
-    name: "Random Name #2",
-    description: "Hello World!",
-    imgsrc:
-      "https://www.audi.in/content/dam/nemo/in/3_O-Homepage/E-tronHub-3840X4000.jpg?imwidth=1920",
-  },
-  {
-    name: "Random Name #2",
-    description: "Hello World!",
-    imgsrc:
-      "https://www.bmw-evmautokraft.in/sites/default/files/sliders/x1_desktop_offer.png",
-  },
-  {
-    name: "Random Name #2",
-    description: "Hello World!",
-    imgsrc:
-      "https://www.bmw-evmautokraft.in/sites/default/files/sliders/1680x756_5.jpeg",
-  },
-  {
-    name: "Random Name #2",
-    description: "Hello World!",
-    imgsrc:
-      "https://www.bmw-evmautokraft.in/sites/default/files/sliders/3gl_desktop.png",
-  },
-  {
-    name: "Random Name #2",
-    description: "Hello World!",
-    imgsrc:
-      "https://www.bmw-evmautokraft.in/sites/default/files/sliders/m340i.jpg",
-  },
-];
+// var Carousel_items = [
+//   {
+//     name: "Random Name #2",
+//     description: "Hello World!",
+//     imgsrc:
+//       "https://www.audi.in/content/dam/nemo/in/3_O-Homepage/E-tronHub-3840X4000.jpg?imwidth=1920",
+//   },
+//   {
+//     name: "Random Name #2",
+//     description: "Hello World!",
+//     imgsrc:
+//       "https://www.bmw-evmautokraft.in/sites/default/files/sliders/x1_desktop_offer.png",
+//   },
+//   {
+//     name: "Random Name #2",
+//     description: "Hello World!",
+//     imgsrc:
+//       "https://www.bmw-evmautokraft.in/sites/default/files/sliders/1680x756_5.jpeg",
+//   },
+//   {
+//     name: "Random Name #2",
+//     description: "Hello World!",
+//     imgsrc:
+//       "https://www.bmw-evmautokraft.in/sites/default/files/sliders/3gl_desktop.png",
+//   },
+//   {
+//     name: "Random Name #2",
+//     description: "Hello World!",
+//     imgsrc:
+//       "https://www.bmw-evmautokraft.in/sites/default/files/sliders/m340i.jpg",
+//   },
+// ];
 
 const Home = () => {
+  const [carsCategory, setCarsCategory] = React.useState([]);
+  const [carouselList, setCarouselList] = React.useState([]);
+  const [newArrivals, setNewArrivals] = React.useState([]);
+
+  React.useEffect(() => {
+    axios
+      .post(window.serverUrl + "/api/cars/getcategory", {}, axiosConfig)
+      .then((d) => {
+        setCarsCategory(d.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+    axios
+      .post(window.serverUrl + "/api/cars/getcarousel", {}, axiosConfig)
+      .then((d) => {
+        setCarouselList(d.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+    axios
+      .post(window.serverUrl + "/api/cars/getnewarrival", {}, axiosConfig)
+      .then((d) => {
+        setNewArrivals(d.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+
   return (
     <>
-    <Notification/>
-      <CarouselMenu items={Carousel_items} />
+      <Notification />
+      <CarouselMenu items={carouselList} />
       <p
         style={{
           fontFamily: ["Titillium Web", "sans-serif"],
@@ -87,10 +123,10 @@ const Home = () => {
       </p>
 
       <Grid container spacing={2} sx={{ mx: "auto" }}>
-        {seriesdb.series.map((d, i) => {
+        {carsCategory.map((d, i) => {
           return (
             <Grid item xs={3} key={i}>
-              <CardHome data={d} />
+              <CategoryCard data={d} />
             </Grid>
           );
         })}
@@ -106,7 +142,7 @@ const Home = () => {
       </p>
 
       <Grid container spacing={2} sx={{ mx: "auto" }}>
-        {seriesdb.series.map((d, i) => {
+        {newArrivals.map((d, i) => {
           return (
             <Grid item xs={3} key={i}>
               <CardHome data={d} />

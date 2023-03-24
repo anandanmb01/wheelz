@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const userModel = require("../config/database");
+const {userModel} = require("../config/database");
 const passport = require("passport");
 const { hashSync, compareSync } = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -18,11 +18,13 @@ router.post('/checkmail',(req,res)=>{
 })
 
 router.post("/register", (req, res) => {
+  
   const user = new userModel({
     email: req.body.email,
     password: hashSync(req.body.password, 10),
     firstName:req.body.firstName,
     lastName:req.body.lastName,
+    vendor: req.body.vendor ? req.body.vendor : null,
   });
   
   user
@@ -74,6 +76,11 @@ router.post("/login", async (req, res) => {
         success: true,
         message: "Logged in successfully!",
         token: "Bearer " + token,
+        user:{
+          ...user.toJSON(),
+          ["password"]:null,
+          ["__v"]:null,
+        }
       });
     });
 });

@@ -29,10 +29,10 @@ function Item(props) {
             objectFit: "cover",
           }}
           alt="The house from the offer."
-          src={props.item.imgsrc}
+          src={props.item.imgUrl}
         />
         {/* <Typography variant="h6" component="div">
-          {props.item.description}
+          {props.item.desc}
         </Typography> */}
       </Box>
     </Paper>
