@@ -13,22 +13,25 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import HeaderSearch from "./HeaderSearch";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { AuthContext } from "../../context/AuthContext";
 import SignInModal from "../../pages/Signin/SignInModal";
 import Notification from "../Notification";
 import { UserContext } from "../../context/UserContext";
 import SignOutModal from "./SignOutModal";
+import { useNavigate } from "react-router-dom";
+import CartIcon from "./CartIcon";
 
 
 const Header = () => {
   // eslint-disable-next-line
+
+
   const { authStatus: auth, setAuthStatus } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [showSignIn, setShowSignIn] = useState(false);
-  const { user } = useContext(UserContext)
-  const [showSignOut,setShowSignOut] = React.useState(false);
-
+  const { user } = useContext(UserContext);
+  const [showSignOut, setShowSignOut] = React.useState(false);
+  const navigate = useNavigate();
 
   const closeSignInModal = () => {
     setShowSignIn(false);
@@ -42,14 +45,14 @@ const Header = () => {
     setAnchorEl(null);
   };
 
-  function handeSignOut(){
+  function handeSignOut() {
     setAnchorEl(null);
     setShowSignOut(true);
-  };
+  }
 
   return (
     <>
-    <SignOutModal showSignOut={showSignOut} setShowSignOut={setShowSignOut}/>
+      <SignOutModal showSignOut={showSignOut} setShowSignOut={setShowSignOut} />
       <Notification />
       <SignInModal state={showSignIn} setState={closeSignInModal} />
       <Box my={1} sx={{ flexGrow: 1 }}>
@@ -68,8 +71,10 @@ const Header = () => {
                   aria-label="menu"
                   sx={{ mr: 2 }}
                   style={{ borderRadius: "0" }}
+                  onClick={() => {
+                    navigate("/");
+                  }}
                 >
-                  {/* <MenuIcon /> */}
                   <img
                     src={process.env.PUBLIC_URL + "/images/icon.png"}
                     alt="icon"
@@ -111,7 +116,7 @@ const Header = () => {
                 {auth ? (
                   <div>
                     <Stack direction={"row"} sx={{ alignItems: "center" }}>
-                      <IconButton
+                      {/* <IconButton
                         size="large"
                         aria-label="account of current user"
                         aria-controls="menu-appbar"
@@ -120,7 +125,8 @@ const Header = () => {
                         color="inherit"
                       >
                         <ShoppingCartIcon sx={{ width: 32, height: 32 }} />
-                      </IconButton>
+                      </IconButton> */}
+                      <CartIcon/>
                       <Stack
                         direction={"row"}
                         boxShadow={1}

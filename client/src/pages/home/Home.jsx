@@ -6,41 +6,42 @@ import Notification from "../../components/Notification";
 import CategoryCard from "./CategoryCard";
 import axios from "axios";
 import axiosConfig from "../../utilities/axiosConfig";
+import { useNavigate } from "react-router-dom";
 
-const seriesdb = {
-  series: [
-    {
-      url: "https://media.tenor.com/78yYgk4Vb4MAAAAC/lamborghini.gif",
-      title: "Lizard",
-      desc: "Lorem Ipsum",
-    },
-    {
-      url: "https://media.tenor.com/QfzQwc5_BnUAAAAC/lamborghini-aventador.gif",
-      title: "Lizard",
-      desc: "Lorem Ipsum",
-    },
-    {
-      url: "https://media.tenor.com/6nm5RZjZx04AAAAC/lamborghini-huracan-lambo.gif",
-      title: "Lizard",
-      desc: "Lorem Ipsum",
-    },
-    {
-      url: "https://media.tenor.com/i-yDF78jlOoAAAAC/audi-automobile-manufacturer.gif",
-      title: "Lizard",
-      desc: "Lorem Ipsum",
-    },
-    {
-      url: "https://media.tenor.com/14meTPGyoNoAAAAd/audi.gif",
-      title: "Lizard",
-      desc: "Lorem Ipsum",
-    },
-    {
-      url: "https://i.pinimg.com/originals/32/37/45/323745d3eb7a804f3ca63ea8884c7598.gif",
-      title: "Lizard",
-      desc: "Lorem Ipsum",
-    },
-  ],
-};
+// const seriesdb = {
+//   series: [
+//     {
+//       url: "https://media.tenor.com/78yYgk4Vb4MAAAAC/lamborghini.gif",
+//       title: "Lizard",
+//       desc: "Lorem Ipsum",
+//     },
+//     {
+//       url: "https://media.tenor.com/QfzQwc5_BnUAAAAC/lamborghini-aventador.gif",
+//       title: "Lizard",
+//       desc: "Lorem Ipsum",
+//     },
+//     {
+//       url: "https://media.tenor.com/6nm5RZjZx04AAAAC/lamborghini-huracan-lambo.gif",
+//       title: "Lizard",
+//       desc: "Lorem Ipsum",
+//     },
+//     {
+//       url: "https://media.tenor.com/i-yDF78jlOoAAAAC/audi-automobile-manufacturer.gif",
+//       title: "Lizard",
+//       desc: "Lorem Ipsum",
+//     },
+//     {
+//       url: "https://media.tenor.com/14meTPGyoNoAAAAd/audi.gif",
+//       title: "Lizard",
+//       desc: "Lorem Ipsum",
+//     },
+//     {
+//       url: "https://i.pinimg.com/originals/32/37/45/323745d3eb7a804f3ca63ea8884c7598.gif",
+//       title: "Lizard",
+//       desc: "Lorem Ipsum",
+//     },
+//   ],
+// };
 
 // var Carousel_items = [
 //   {
@@ -85,6 +86,8 @@ const Home = () => {
       .post(window.serverUrl + "/api/cars/getcategory", {}, axiosConfig)
       .then((d) => {
         setCarsCategory(d.data);
+        // console.log(d.data);
+        window.sessionStorage.setItem("categoryList",JSON.stringify(d.data))
       })
       .catch((e) => {
         console.log(e);

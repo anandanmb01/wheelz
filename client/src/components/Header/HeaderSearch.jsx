@@ -3,19 +3,15 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import CircularProgress from "@mui/material/CircularProgress";
 import SearchIcon from "@mui/icons-material/Search";
-
-function sleep(delay = 0) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, delay);
-  });
-}
+import axios from "axios";
+import axiosConfig from "../../utilities/axiosConfig";
 
 export default function HeaderSearch() {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState([]);
   const loading = open && options.length === 0;
+  const [inp,setInp] = React.useState("");
 
-    // console.log(options);
 
   React.useEffect(() => {
     let active = true;
@@ -23,12 +19,11 @@ export default function HeaderSearch() {
     if (!loading) {
       return undefined;
     }
-
     (async () => {
-      await sleep(1e3); // For demo purposes.
+      // await sleep(1e3); // For demo purposes.
 
       if (active) {
-        setOptions([...topFilms]);
+
       }
     })();
 
@@ -60,14 +55,20 @@ export default function HeaderSearch() {
         onClose={() => {
           setOpen(false);
         }}
-        isOptionEqualToValue={(option, value) => option.title === value.title}
-        getOptionLabel={(option) => option.title}
+        isOptionEqualToValue={(option, value) => option.name === value.name}
+        getOptionLabel={(option) => option.name}
         options={options}
         loading={loading}
         renderInput={(params) => (
           <TextField
             {...params}
             label="Search"
+            onChange={(e)=>{
+              axios.post(window.serverUrl+'/api/cars/searchcar',{pattern:e.target.value},axiosConfig).then((d)=>{
+          setOptions(d.data);
+        }).catch((e)=>{console.log(e)})
+              
+              }}
             InputProps={{
               ...params.InputProps,
               endAdornment: (

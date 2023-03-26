@@ -1,7 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@1,600&display=swap');
 
-
 * {
     /* color: blue; */
 
+}
+body{
+    margin: 0;
+    background-color: whitesmoke;
+}
+#root{
+    padding-left: 100px;
+    padding-right: 100px;
 }

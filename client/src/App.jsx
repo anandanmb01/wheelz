@@ -12,13 +12,26 @@ import axiosConfig from "./utilities/axiosConfig";
 import axios from "axios";
 import { NotificationPropContext } from "./context/NotificationPropContext";
 import { UserContext } from "./context/UserContext";
+import { CartContext } from "./context/CartContext";
+import Vendor from "./pages/Vendor/Vendor";
 
 window.serverUrl = "http://127.0.0.1:5000";
+
+const handleTabClose = (cart) => {
+  if (cart !== {}) {
+    window.localStorage.setItem("cart", JSON.stringify(cart));
+  }
+};
 
 function App() {
   const { setAuthStatus } = React.useContext(AuthContext);
   const { setUser } = React.useContext(UserContext);
   const { setNotificationProp } = React.useContext(NotificationPropContext);
+  const { cart, setCart } = React.useContext(CartContext);
+  window.addEventListener("beforeunload", () => {
+    handleTabClose(cart);
+  });
+
 
   React.useEffect(() => {
     (() => {
@@ -46,22 +59,22 @@ function App() {
 
   return (
     <>
-      <Header />
+      {/* <Header />
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route path="/cart" element={true ? <CartPage /> : <Home />} />
         <Route
-          path="/section/:sectionName"
+          path="/category/:categoryName"
           element={true ? <CategoryProductList /> : <Home />}
         />
         <Route
           path="/product/:productId"
           element={true ? <Product /> : <Home />}
         />
-        {/* <Product/> */}
-        {/* <CategoryProductList/> */}
-        {/* <CartPage /> */}
       </Routes>
+      <Footer /> */}
+      <Header />
+      <Vendor/>
       <Footer />
     </>
   );

@@ -5,8 +5,11 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { useNavigate } from "react-router-dom";
 
 export default function CategoryCard(props) {
+
+  const navigate = useNavigate()
   return (
     <Card sx={{ maxWidth: 'auto' }}>
       <CardMedia
@@ -18,13 +21,13 @@ export default function CategoryCard(props) {
         <Typography gutterBottom variant="h5" component="div">
           {props.data.name}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        {/* <Typography variant="body2" color="text.secondary">
           {props.data.desc}
-        </Typography>
+        </Typography> */}
       </CardContent>
       <CardActions >
         {/* <Button size="small">Share</Button> */}
-        <Button size="small">Learn More</Button>
+        <Button size="small" onClick={()=>{navigate(`/category/${props.data.name}`)}}>Explore</Button>
       </CardActions>
     </Card>
   );

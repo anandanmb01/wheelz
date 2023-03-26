@@ -3,6 +3,8 @@ import Grid from "@mui/material/Grid";
 import CardHome from "../home/CardHome";
 import { Box } from "@mui/material";
 import { useParams } from "react-router-dom";
+import axios from "axios";
+import axiosConfig from "../../utilities/axiosConfig";
 
 const seriesdb = {
   series: [
@@ -64,7 +66,38 @@ var Carousel_items = [
 ];
 
 const CategoryProductList = (props) => {
-  console.log(useParams());
+
+
+  let catList=window.sessionStorage.getItem('categoryList')
+  const [catCars,setCatCars] = React.useState([]);
+  
+  if (!catList){
+    axios
+    .post(window.serverUrl + "/api/cars/getcategory", {}, axiosConfig)
+    .then((d) => {
+      catList = JSON.stringify( d.data);
+      window.sessionStorage.setItem("categoryList",catList);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+  }
+  const parms=useParams();
+  let categoryObj = JSON.parse(catList).find((d)=>{return(d.name===(parms.categoryName))})
+
+  React.useEffect(()=>{
+    axios
+    .post(window.serverUrl + "/api/cars/getcategorycars", {catId:categoryObj._id}, axiosConfig)
+    .then((d) => {
+      setCatCars(d.data);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+  },[]);
+  
+  // console.log(catCars);
+
 
   return (
     <>
@@ -78,7 +111,7 @@ const CategoryProductList = (props) => {
       </p>
       <Box
         component={"img"}
-        src={Carousel_items[0].imgsrc}
+        src={categoryObj.imgUrl}
         alt="gif"
         sx={{
           height: { xs: 400, lg: 600 },
@@ -96,7 +129,7 @@ const CategoryProductList = (props) => {
       </p>
 
       <Grid container spacing={2} sx={{ mx: "auto" }}>
-        {seriesdb.series.map((d, i) => {
+        {catCars.map((d, i) => {
           return (
             <Grid item xs={3} key={i}>
               <CardHome data={d} />
