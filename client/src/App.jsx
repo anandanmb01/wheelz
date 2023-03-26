@@ -14,6 +14,16 @@ import { NotificationPropContext } from "./context/NotificationPropContext";
 import { UserContext } from "./context/UserContext";
 import { CartContext } from "./context/CartContext";
 import Vendor from "./pages/Vendor/Vendor";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+
+const theme = "light";
+
+const darkTheme = createTheme({
+  palette: {
+    mode: theme,
+  },
+});
 
 window.serverUrl = "http://127.0.0.1:5000";
 
@@ -31,7 +41,6 @@ function App() {
   window.addEventListener("beforeunload", () => {
     handleTabClose(cart);
   });
-
 
   React.useEffect(() => {
     (() => {
@@ -59,7 +68,9 @@ function App() {
 
   return (
     <>
-      {/* <Header />
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
+        {/* <Header />
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route path="/cart" element={true ? <CartPage /> : <Home />} />
@@ -73,9 +84,10 @@ function App() {
         />
       </Routes>
       <Footer /> */}
-      <Header />
-      <Vendor/>
-      <Footer />
+        <Header />
+        <Vendor />
+        <Footer />
+      </ThemeProvider>
     </>
   );
 }
