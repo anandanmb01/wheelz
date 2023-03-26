@@ -69,4 +69,16 @@ router.post("/getcar", (req, res) => {
     });
 });
 
+router.post("/searchcar", (req, res) => {
+  var regex = new RegExp("^" + req.body.pattern);
+  carModel
+    .find({name:{ $regex: regex}},{name:1}).limit(10)
+    .then((d) => {
+      res.status(200).send(d);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+});
+
 module.exports = router;
