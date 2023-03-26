@@ -47,5 +47,26 @@ router.post("/getnewarrival", (req, res) => {
     });
 });
 
+router.post("/getcategorycars", (req, res) => {
+  carModel
+    .find({catId:req.body.catId},{name:1,catId:1,rating:1,vendor:1,imgUrl:1,desc:1,price:1,discount:1}).limit(6)
+    .then((d) => {
+      res.status(200).send(d);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+});
+
+router.post("/getcar", (req, res) => {
+  carModel
+    .findOne({_id:req.body._id})
+    .then((d) => {
+      res.status(200).send(d);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+});
 
 module.exports = router;

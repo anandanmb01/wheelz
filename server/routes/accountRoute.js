@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const userModel = require("../config/database");
+const {userModel} = require("../config/database");
 const passport = require("passport");
 const { hashSync, compareSync } = require("bcrypt");
 const jwt = require("jsonwebtoken");

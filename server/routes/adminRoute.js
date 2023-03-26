@@ -4,7 +4,7 @@ const {
   userModel,
   carCategoryModel,
   carouselModel,
-  carModel
+  carModel,
 } = require("../config/database");
 const passport = require("passport");
 const { hashSync, compareSync } = require("bcrypt");
@@ -14,38 +14,111 @@ router.all("/", (req, res) => {
   res.send("general route");
 });
 
-router.post("/getcategory", (req, res) => {
-  carCategoryModel
-    .find({})
+router.post("/registercarousel", (req, res) => {
+  const carousel = new carouselModel({
+    name: req.body.name,
+    desc: req.body.desc,
+    imgUrl: req.body.imgUrl,
+  });
+
+  carousel
+    .save()
     .then((d) => {
-      res.status(200).send(d);
+      res.status(200).send({
+        success: true,
+      });
     })
-    .catch((e) => {
-      console.log(e);
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send({
+        success: false,
+      });
     });
 });
 
-router.post("/getcarousel", (req, res) => {
-  carouselModel
-    .find({})
+router.post("/deletecarousel", (req, res) => {
+  carouselModel.deleteOne({ _id: req.body._id }).exec()
+  .then((d) => {
+    res.status(200).send({
+      success: true,
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status(500).send({
+      success: false,
+    });
+  });
+});
+
+router.post("/updatecarousel", (req, res) => {
+  carouselModel.updateOne({ _id: req.body._id },req.body).exec()
+  .then((d) => {
+    res.status(200).send({
+      success: true,
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status(500).send({
+      success: false,
+    });
+  });
+});
+
+
+
+////////
+
+router.post("/registercategory", (req, res) => {
+  const carCategory = new carCategoryModel({
+    name: req.body.name,
+    desc: req.body.desc,
+    imgUrl: req.body.imgUrl,
+  });
+  carCategory
+    .save()
     .then((d) => {
-      res.status(200).send(d);
+      res.status(200).send({
+        success: true,
+      });
     })
-    .catch((e) => {
-      console.log(e);
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send({
+        success: false,
+      });
     });
 });
 
-router.post("/getnewarrival", (req, res) => {
-  carModel
-    .find({newArrival:true}).limit(6)
-    .then((d) => {
-      res.status(200).send(d);
-    })
-    .catch((e) => {
-      console.log(e);
+router.post("/deletecategory", (req, res) => {
+  carCategoryModel.deleteOne({ _id: req.body._id }).exec()
+  .then((d) => {
+    res.status(200).send({
+      success: true,
     });
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status(500).send({
+      success: false,
+    });
+  });
 });
 
+router.post("/updatecategory", (req, res) => {
+  carCategoryModel.updateOne({ _id: req.body._id },req.body).exec()
+  .then((d) => {
+    res.status(200).send({
+      success: true,
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status(500).send({
+      success: false,
+    });
+  });
+});
 
 module.exports = router;

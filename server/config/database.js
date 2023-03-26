@@ -42,6 +42,7 @@ const carSchema = new mongoose.Schema({
   discount: "string",
   price: "string",
   newArrival: "boolean",
+  spec:'object'
 });
 const carModel = mongoose.model("car", carSchema);
 
