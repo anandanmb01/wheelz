@@ -13,6 +13,9 @@ import axios from "axios";
 import axiosConfig from "../../utilities/axiosConfig";
 import { NotificationPropContext } from "../../context/NotificationPropContext";
 import { useNavigate } from "react-router-dom";
+import AdminHome from "./AdminHome";
+import RecentActorsIcon from "@mui/icons-material/RecentActors";
+import AdminCarouselPage from "./AdminCarouselPage";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -119,27 +122,33 @@ export default function Admin() {
             {...a11yProps(0)}
           />
           <Tab
+            icon={<RecentActorsIcon />}
+            iconPosition="start"
+            label="Carousal"
+            {...a11yProps(1)}
+          />
+          <Tab
             icon={<DirectionsCarIcon />}
             iconPosition="start"
             label="Cars"
-            {...a11yProps(1)}
+            {...a11yProps(2)}
           />
           <Tab
             icon={<ShoppingCartCheckoutIcon />}
             iconPosition="start"
             label="Orders"
-            {...a11yProps(2)}
+            {...a11yProps(3)}
           />
-          <Tab label="Item Four" {...a11yProps(3)} />
-          <Tab label="Item Five" {...a11yProps(4)} />
-          <Tab label="Item Six" {...a11yProps(5)} />
-          <Tab label="Item Seven" {...a11yProps(6)} />
+          <Tab label="Item Four" {...a11yProps(4)} />
+          <Tab label="Item Five" {...a11yProps(5)} />
+          <Tab label="Item Six" {...a11yProps(6)} />
+          <Tab label="Item Seven" {...a11yProps(7)} />
         </Tabs>
         <TabPanel value={value} index={0}>
-          {/* <VendorHome /> */}
+          <AdminHome />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          {/* <VendorCars /> */}
+          <AdminCarouselPage />
         </TabPanel>
         <TabPanel value={value} index={2}>
           Item Three

@@ -18,7 +18,7 @@ router.post("/registercarousel", (req, res) => {
   const carousel = new carouselModel({
     name: req.body.name,
     desc: req.body.desc,
-    imgUrl: req.body.imgUrl,
+    imgUrl: req.body.url,
   });
 
   carousel
