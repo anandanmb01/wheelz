@@ -36,6 +36,7 @@ router.post("/registercar", (req, res) => {
             success: false,
           });
         });
+      // console.log(d.body);
     })
 
     .catch((e) => {
@@ -51,6 +52,33 @@ router.post("/registercar", (req, res) => {
   //   });
   console.log(req.body);
 });
+
+router.post("/searchcar", (req, res) => {
+  var regex = new RegExp("^" + req.body.pattern);
+  carModel
+    .find({ name: { $regex: regex }, "vendor._id": req.user._id })
+    .limit(10)
+    .then((d) => {
+      res.status(200).send(d);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+});
+
+router.post("/deletecar", (req, res) => {
+  carModel
+    .deleteOne({ _id: req.body._id, "vendor._id": req.user._id })
+    .then((d) => {
+      res.status(200).send({
+        success: true,
+      });
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+});
+
 
 
 module.exports = router;

@@ -65,7 +65,11 @@ router.post("/login", async (req, res) => {
 
       const payload = {
         email: user.email,
-        id: user._id,
+        username: user?.username,
+        _id: user._id,
+        vendor: user?.vendor?.status,
+        admin:user?.admin?.status
+        // {username:1,"vendor.status":1,"admin.status":1,email:1}
       };
 
       const token = jwt.sign(payload, process.env.JWT_KEY, {
@@ -98,5 +102,23 @@ router.post(
     });
   }
 );
+
+
+
+
+router.post("/checkadmin",(req, res) => {
+  userModel.findOne({_id:req.user._id,"admin.status":true},{_id:1}).exec()
+  .then((d)=>{
+      if(d=={}){
+        res.status(200).send({
+          success: false,
+        })
+      }else{
+        res.status(200).send({
+          success: true,
+        })
+      }
+    })
+});
 
 module.exports = router;

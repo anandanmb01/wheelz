@@ -8,11 +8,13 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { AuthContext } from "../../context/AuthContext";
 import { UserContext } from "../../context/UserContext";
 import { NotificationPropContext } from "../../context/NotificationPropContext";
+import { useNavigate } from "react-router-dom";
 
 export default function SignOutModal(props) {
   const { setUser } = React.useContext(UserContext);
   const { setAuthStatus } = React.useContext(AuthContext);
   const { setNotificationProp } = React.useContext(NotificationPropContext);
+  const navigator = useNavigate();
 
   const handleClose = () => {
     props.setShowSignOut(false);
@@ -29,6 +31,7 @@ export default function SignOutModal(props) {
     setUser({});
     window.localStorage.removeItem("token");
     delete window.token;
+    navigator('/');
   };
 
   return (

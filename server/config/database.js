@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema({
   facebookId: "string",
   orders: "object",
   vendor: "object",
+  admin:"object"
 });
 const userModel = mongoose.model("user", userSchema);
 

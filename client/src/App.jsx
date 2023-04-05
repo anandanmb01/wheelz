@@ -16,6 +16,9 @@ import { CartContext } from "./context/CartContext";
 import Vendor from "./pages/Vendor/Vendor";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import VendorRegister from "./pages/Vendor/VendorRegister";
+import { Box } from "@mui/material";
+import Admin from "./pages/Admin/Admin";
 
 const theme = "light";
 
@@ -70,22 +73,27 @@ function App() {
     <>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
-        {/* <Header />
-      <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route path="/cart" element={true ? <CartPage /> : <Home />} />
-        <Route
-          path="/category/:categoryName"
-          element={true ? <CategoryProductList /> : <Home />}
-        />
-        <Route
-          path="/product/:productId"
-          element={true ? <Product /> : <Home />}
-        />
-      </Routes>
-      <Footer /> */}
         <Header />
-        <Vendor />
+        <Box sx={{minHeight:'calc(100vh - 192px)'}}>
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route path="/cart" element={true ? <CartPage /> : <Home />} />
+          <Route
+            path="/category/:categoryName"
+            element={true ? <CategoryProductList /> : <Home />}
+          />
+          <Route
+            path="/product/:productId"
+            element={true ? <Product /> : <Home />}
+          />
+          <Route path="/vendor" element={true ? <Vendor /> : <Home />} />
+          <Route path="/admin" element={true ? <Admin /> : <Home />} />
+          <Route
+            path="/vendor-register"
+            element={true ? <VendorRegister /> : <Home />}
+          />
+        </Routes>
+        </Box>
         <Footer />
       </ThemeProvider>
     </>

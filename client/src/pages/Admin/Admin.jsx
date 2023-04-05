@@ -4,18 +4,15 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import VendorHome from "./VendorHome";
 import HomeIcon from "@mui/icons-material/Home";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import StoreIcon from "@mui/icons-material/Store";
 import { Stack } from "@mui/material";
-import VendorCars from "./VendorCars";
 import axios from "axios";
 import axiosConfig from "../../utilities/axiosConfig";
 import { NotificationPropContext } from "../../context/NotificationPropContext";
 import { useNavigate } from "react-router-dom";
-import VendorRegister from "./VendorRegister";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -47,31 +44,31 @@ function a11yProps(index) {
   };
 }
 
-export default function Vendor() {
+export default function Admin() {
   const [value, setValue] = React.useState(0);
   const { setNotificationProp } = React.useContext(NotificationPropContext);
   const navigator = useNavigate();
 
   React.useEffect(() => {
     axios
-      .post(window.serverUrl + "/api/command/checkvendor", {}, axiosConfig)
+      .post(window.serverUrl + "/api/command/checkadmin", {}, axiosConfig)
       .then((d) => {
         if (d.data?.success) {
           setNotificationProp({
             open_: true,
             severity: "success",
-            message: "Welcome vendor",
+            message: "Welcome admin",
           });
         }
       })
       .catch((e) => {
         setNotificationProp({
           open_: true,
-          severity: "info",
-          message: "Register as a vendor",
+          severity: "error",
+          message: "Account doesnot have admin privileges",
         });
-
-        navigator("/vendor-register");
+        setTimeout(() => {}, 1000);
+        navigator("/");
         console.log(e);
       });
   }, []);
@@ -93,7 +90,7 @@ export default function Vendor() {
         <Stack direction={"row"} sx={{ alignItems: "center" }}>
           <StoreIcon sx={{ fontSize: 50, mx: 3 }} />
           <Typography variant="h4" component="span" my={3}>
-            WHEELZ VENDOR PANEL
+            WHEELZ ADMIN PANEL
           </Typography>
         </Stack>
       </Box>
@@ -139,10 +136,10 @@ export default function Vendor() {
           <Tab label="Item Seven" {...a11yProps(6)} />
         </Tabs>
         <TabPanel value={value} index={0}>
-          <VendorHome />
+          {/* <VendorHome /> */}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <VendorCars />
+          {/* <VendorCars /> */}
         </TabPanel>
         <TabPanel value={value} index={2}>
           Item Three
