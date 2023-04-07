@@ -10,7 +10,7 @@ router.all("/", (req, res) => {
 });
 
 router.post("/getuser", (req, res) => {
-  console.log(req.user);
+  // console.log(req.user);
   userModel
     .findOne({ _id: req.user._id })
     .then((d) => {

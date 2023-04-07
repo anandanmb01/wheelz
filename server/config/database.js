@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
   facebookId: "string",
   orders: "object",
   vendor: "object",
-  admin:"object"
+  admin: "object",
 });
 const userModel = mongoose.model("user", userSchema);
 
@@ -43,8 +43,20 @@ const carSchema = new mongoose.Schema({
   discount: "string",
   price: "string",
   newArrival: "boolean",
-  spec:'object'
+  spec: "object",
 });
 const carModel = mongoose.model("car", carSchema);
 
-module.exports = { userModel, carCategoryModel, carouselModel, carModel };
+const couponSchema = new mongoose.Schema({
+  name: "string",
+  fun: "string",
+});
+const couponModel = mongoose.model("coupon", couponSchema);
+
+module.exports = {
+  userModel,
+  carCategoryModel,
+  carouselModel,
+  carModel,
+  couponModel,
+};

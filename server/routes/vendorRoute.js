@@ -50,7 +50,7 @@ router.post("/registercar", (req, res) => {
   //   .catch((e) => {
   //     console.log(e);
   //   });
-  console.log(req.body);
+  // console.log(req.body);
 });
 
 router.post("/searchcar", (req, res) => {

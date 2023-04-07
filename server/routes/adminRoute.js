@@ -67,9 +67,6 @@ router.post("/updatecarousel", (req, res) => {
 });
 
 
-
-////////
-
 router.post("/registercategory", (req, res) => {
   const carCategory = new carCategoryModel({
     name: req.body.name,

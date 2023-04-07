@@ -10,8 +10,9 @@ import { Button, Paper, Stack, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import axiosConfig from "../../utilities/axiosConfig";
-
+import axiosConfig from "../../../utilities/axiosConfig";
+import { NotificationPropContext } from "../../../context/NotificationPropContext";
+import { useContext } from "react";
 
 
 const style = {
@@ -23,7 +24,9 @@ const style = {
   p: 4,
 };
 
-export default function AddCarousel() {
+export default function AddCategory() {
+  const { setNotificationProp } = React.useContext(NotificationPropContext);
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -39,10 +42,15 @@ export default function AddCarousel() {
       url: Yup.string().required(),
     }),
     onSubmit: (values) => {
-    //   console.log(values);
-      axios.post(window.serverUrl+'/api/admin/registercarousel',values,axiosConfig).then((d)=>{
-        console.log("car added successfully");
-      }).catch((e)=>{console.log(e)})
+      //   console.log(values);
+      axios.post(window.serverUrl + '/api/admin/registercategory', values, axiosConfig).then((d) => {
+        setNotificationProp({
+          open_: true,
+          severity: "success",
+          message: "Car category added successfully",
+        });
+        window.location.reload(false);
+      }).catch((e) => { console.log(e) })
     },
   });
 
@@ -66,6 +74,7 @@ export default function AddCarousel() {
       >
         <Fade in={open}>
           <Paper sx={style} >
+          <Typography variant="h5" p={2}>Add Car Category</Typography>
             <form onSubmit={formik.handleSubmit}>
               <Stack direction={"row"} sx={{ alignItems: "center" }}>
                 <label htmlFor="name">

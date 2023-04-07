@@ -19,6 +19,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import VendorRegister from "./pages/Vendor/VendorRegister";
 import { Box } from "@mui/material";
 import Admin from "./pages/Admin/Admin";
+import { useContext } from "react";
 
 const theme = "light";
 

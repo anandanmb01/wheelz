@@ -13,9 +13,12 @@ import axios from "axios";
 import axiosConfig from "../../utilities/axiosConfig";
 import { NotificationPropContext } from "../../context/NotificationPropContext";
 import { useNavigate } from "react-router-dom";
-import AdminHome from "./AdminHome";
+import AdminHome from "./Home/AdminHome";
 import RecentActorsIcon from "@mui/icons-material/RecentActors";
-import AdminCarouselPage from "./AdminCarouselPage";
+import AdminCarouselPage from "./Carousel/AdminCarouselPage";
+import CategoryIcon from '@mui/icons-material/Category';
+import AdminCategoryPage from "./Category/AdminCategoryPage";
+import AdminCarPage from "./Cars/AdminCarPage";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -70,7 +73,7 @@ export default function Admin() {
           severity: "error",
           message: "Account doesnot have admin privileges",
         });
-        setTimeout(() => {}, 1000);
+        setTimeout(() => { }, 1000);
         navigator("/");
         console.log(e);
       });
@@ -128,16 +131,22 @@ export default function Admin() {
             {...a11yProps(1)}
           />
           <Tab
+            icon={<CategoryIcon />}
+            iconPosition="start"
+            label="Category"
+            {...a11yProps(2)}
+          />
+          <Tab
             icon={<DirectionsCarIcon />}
             iconPosition="start"
             label="Cars"
-            {...a11yProps(2)}
+            {...a11yProps(3)}
           />
           <Tab
             icon={<ShoppingCartCheckoutIcon />}
             iconPosition="start"
             label="Orders"
-            {...a11yProps(3)}
+            {...a11yProps(4)}
           />
           <Tab label="Item Four" {...a11yProps(4)} />
           <Tab label="Item Five" {...a11yProps(5)} />
@@ -151,10 +160,10 @@ export default function Admin() {
           <AdminCarouselPage />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          Item Three
+          <AdminCategoryPage />
         </TabPanel>
         <TabPanel value={value} index={3}>
-          Item Four
+          <AdminCarPage />
         </TabPanel>
         <TabPanel value={value} index={4}>
           Item Five
