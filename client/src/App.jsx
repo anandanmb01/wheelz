@@ -19,7 +19,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import VendorRegister from "./pages/Vendor/VendorRegister";
 import { Box } from "@mui/material";
 import Admin from "./pages/Admin/Admin";
-import { useContext } from "react";
+
+
 
 const theme = "light";
 
@@ -41,7 +42,9 @@ function App() {
   const { setAuthStatus } = React.useContext(AuthContext);
   const { setUser } = React.useContext(UserContext);
   const { setNotificationProp } = React.useContext(NotificationPropContext);
-  const { cart, setCart } = React.useContext(CartContext);
+  const { cart } = React.useContext(CartContext);
+
+
   window.addEventListener("beforeunload", () => {
     handleTabClose(cart);
   });
@@ -68,6 +71,7 @@ function App() {
       } else {
       }
     })();
+     // eslint-disable-next-line
   }, []);
 
   return (

@@ -1,6 +1,5 @@
 import { Grid, Typography } from "@mui/material";
 import React from "react";
-import CategoryCard from "../../home/CategoryCard";
 import axios from "axios";
 import axiosConfig from "../../../utilities/axiosConfig";
 import AdminCategoryCard from "./AdminCategoryCard";

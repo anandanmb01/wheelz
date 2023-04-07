@@ -12,6 +12,7 @@ import axios from "axios";
 import axiosConfig from "../../../utilities/axiosConfig";
 import { NotificationPropContext } from "../../../context/NotificationPropContext";
 
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -21,7 +22,7 @@ const style = {
   p: 4,
 };
 
-export default function AddCarousel() {
+export default function AddCoupon() {
   const { setNotificationProp } = React.useContext(NotificationPropContext);
 
   const [open, setOpen] = React.useState(false);
@@ -30,21 +31,19 @@ export default function AddCarousel() {
   const formik = useFormik({
     initialValues: {
       name: "",
-      desc: "",
-      url: "",
+      fun: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().max(15, "must be 15 characters or less").required(),
-      desc: Yup.string().required(),
-      url: Yup.string().required(),
+      fun: Yup.string().required(),
     }),
     onSubmit: (values) => {
       //   console.log(values);
-      axios.post(window.serverUrl + '/api/admin/registercarousel', values, axiosConfig).then((d) => {
+      axios.post(window.serverUrl + '/api/admin/registercoupon', values, axiosConfig).then((d) => {
         setNotificationProp({
           open_: true,
           severity: "success",
-          message: "Carousel added successfully",
+          message: "Coupon added successfully",
         });
         window.location.reload(false);
       }).catch((e) => { console.log(e) })
@@ -53,9 +52,8 @@ export default function AddCarousel() {
 
   return (
     <>
-
       <IconButton aria-label="Example" onClick={handleOpen}>
-        <AddCircleIcon fontSize="large" />
+        <AddCircleIcon fontSize="small" /> <Typography variant="subtitle1" sx={{ px: 1 }}>Add coupon</Typography>
       </IconButton>
       <Modal
         aria-labelledby="transition-modal-title"
@@ -72,8 +70,7 @@ export default function AddCarousel() {
       >
         <Fade in={open}>
           <Paper sx={style} >
-          <Typography variant="h5" p={2}>Add Carousel</Typography>
-
+            <Typography variant="h5" p={2}>Add Car Category</Typography>
             <form onSubmit={formik.handleSubmit}>
               <Stack direction={"row"} sx={{ alignItems: "center" }}>
                 <label htmlFor="name">
@@ -96,39 +93,22 @@ export default function AddCarousel() {
               <Stack direction={"row"} sx={{ alignItems: "center" }}>
                 <label htmlFor="desc">
                   <Typography variant="subtitle1" p={3} width="170px">
-                    Description
+                    Function
                   </Typography>
                 </label>
                 <TextField
                   id="desc"
                   label="Description"
                   variant="outlined"
-                  name="desc"
+                  name="fun"
                   onChange={formik.handleChange}
-                  value={formik.values.desc}
-                  helperText={formik.errors.desc}
-                  error={Boolean(formik.touched.desc && formik.errors.desc)}
+                  value={formik.values.fun}
+                  helperText={formik.errors.fun}
+                  error={Boolean(formik.touched.fun && formik.errors.fun)}
                   sx={{ width: "100%" }}
                 />
               </Stack>
-              <Stack direction={"row"} sx={{ alignItems: "center" }}>
-                <label htmlFor="url">
-                  <Typography variant="subtitle1" p={3} width="170px">
-                    Url
-                  </Typography>
-                </label>
-                <TextField
-                  id="url"
-                  label="Url"
-                  variant="outlined"
-                  name="url"
-                  onChange={formik.handleChange}
-                  value={formik.values.url}
-                  helperText={formik.errors.url}
-                  error={Boolean(formik.touched.url && formik.errors.url)}
-                  sx={{ width: "100%" }}
-                />
-              </Stack>
+
               <Stack
                 direction={"row"}
                 sx={{

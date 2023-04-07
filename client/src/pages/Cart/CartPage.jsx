@@ -46,7 +46,7 @@ const CartPage = () => {
           </Paper>
         </Grid>
         <Grid item xs={3}>
-          <Paper elevation={1} sx={{ p: 2, height: "500px" }}>
+          <Paper elevation={1} sx={{ p: 2, minHeight: "500px" }}>
             <SummaryPage />
           </Paper>
         </Grid>

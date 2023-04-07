@@ -19,6 +19,8 @@ import AdminCarouselPage from "./Carousel/AdminCarouselPage";
 import CategoryIcon from '@mui/icons-material/Category';
 import AdminCategoryPage from "./Category/AdminCategoryPage";
 import AdminCarPage from "./Cars/AdminCarPage";
+import DiscountIcon from '@mui/icons-material/Discount';
+import AdminCouponsPage from "./Coupon/AdminCouponsPage";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -77,6 +79,7 @@ export default function Admin() {
         navigator("/");
         console.log(e);
       });
+       // eslint-disable-next-line
   }, []);
 
   const handleChange = (event, newValue) => {
@@ -148,8 +151,11 @@ export default function Admin() {
             label="Orders"
             {...a11yProps(4)}
           />
-          <Tab label="Item Four" {...a11yProps(4)} />
-          <Tab label="Item Five" {...a11yProps(5)} />
+          <Tab
+            icon={<DiscountIcon />}
+            iconPosition="start"
+            label="Coupons"
+            {...a11yProps(5)} />
           <Tab label="Item Six" {...a11yProps(6)} />
           <Tab label="Item Seven" {...a11yProps(7)} />
         </Tabs>
@@ -165,10 +171,10 @@ export default function Admin() {
         <TabPanel value={value} index={3}>
           <AdminCarPage />
         </TabPanel>
-        <TabPanel value={value} index={4}>
-          Item Five
-        </TabPanel>
         <TabPanel value={value} index={5}>
+          <AdminCouponsPage/>
+        </TabPanel>
+        <TabPanel value={value} index={7}>
           Item Six
         </TabPanel>
         <TabPanel value={value} index={6}>
