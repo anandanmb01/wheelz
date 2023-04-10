@@ -4,6 +4,8 @@ import MediaCard from "./MediaCard";
 import MediaHeader from "./MediaHeader";
 import SummaryPage from "./SummaryPage";
 import { CartContext } from "../../context/CartContext";
+import AddressForm from "../../components/Form/AddressForm"
+
 
 const CartPage = () => {
   const { cart } = React.useContext(CartContext);
@@ -19,7 +21,7 @@ const CartPage = () => {
         );
       }
     } else {
-    out.push(<MediaCard imgUrl={""} key={0} />);
+      out.push(<MediaCard imgUrl={""} key={0} />);
     }
     return out;
   }
@@ -51,7 +53,12 @@ const CartPage = () => {
           </Paper>
         </Grid>
       </Grid>
-
+      <Grid container>
+        <Grid item xs={9}>
+        <AddressForm m={2} />
+        </Grid>
+      </Grid>
+      
       <p
         style={{
           fontFamily: ["Titillium Web", "sans-serif"],

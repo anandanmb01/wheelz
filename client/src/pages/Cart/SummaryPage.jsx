@@ -18,15 +18,30 @@ const calculateTotal = (cart) => {
   return out;
 };
 
+const calculateDiscount = (coupenList) => {
+  let out = 0;
+  coupenList.map((t) => {
+    out += (t.discount * -0.01);
+    return null;
+  })
+  return out;
+}
+
+
+
+
 const SummaryPage = () => {
   const { setNotificationProp } = React.useContext(NotificationPropContext);
   const [coupenList, setCoupenList] = React.useState([]);
   const { cart } = React.useContext(CartContext);
-  let price = calculateTotal(cart);
-  let discount = calculateTotal(cart) * 0.05;
-  let localAmount = price + discount;
-  let coupenprice = 0;
   const [coupenCode, setCoupenCode] = React.useState("");
+
+  let price = calculateTotal(cart);
+  let tax = calculateTotal(cart) * 0.05;
+  let coupenprice = calculateDiscount(coupenList) * price;
+  let localAmount = price + tax + coupenprice;
+
+
 
   const handleCoupenClick = () => {
     axios.post(window.serverUrl + '/api/admin/getcoupon', { name: coupenCode }, axiosConfig).then((d) => {
@@ -94,18 +109,10 @@ const SummaryPage = () => {
             Tax [ 5% ]:
           </Typography>
           <Typography variant="h6" color={"grey"} component={"span"}>
-            {`${discount} ₹`}
+            {`${tax} ₹`}
           </Typography>
         </Stack>
         <Divider />
-        {/* <Stack direction={"row"} justifyContent={"space-between"} px={2} py={1}>
-          <Typography variant="h6"  component={"span"}>
-            Coupen code :
-          </Typography>
-          <Typography variant="h6"  component={"span"} sx={{ fontWeight: "bold" }}>
-            5000$
-          </Typography>
-        </Stack> */}
         <Stack direction={"row"} justifyContent={"space-between"} px={2} py={1}>
           <Typography variant="h6" component={"span"}>
             Discount price :
@@ -115,7 +122,7 @@ const SummaryPage = () => {
             component={"span"}
             sx={{ fontWeight: "bold", color: "green" }}
           >
-            {`-${coupenprice} ₹`}
+            {`${coupenprice} ₹`}
           </Typography>
         </Stack>
         <Stack direction={"row"} justifyContent={"space-between"} px={2} py={1}>
@@ -151,7 +158,7 @@ const SummaryPage = () => {
             </Typography>
             <Stack direction={'column'} spacing={2}>
               {coupenList.map((d, i) => {
-                return <CouponCard key={i} data={d} cl={setCoupenList}/>
+                return <CouponCard key={i} data={d} cl={setCoupenList} />
               })}
             </Stack>
 

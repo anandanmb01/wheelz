@@ -19,7 +19,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import VendorRegister from "./pages/Vendor/VendorRegister";
 import { Box } from "@mui/material";
 import Admin from "./pages/Admin/Admin";
-
+import Test from "./components/Form/AddressForm";
 
 
 const theme = "light";
@@ -96,6 +96,10 @@ function App() {
           <Route
             path="/vendor-register"
             element={true ? <VendorRegister /> : <Home />}
+          />
+                    <Route
+            path="/test"
+            element={true ? <Test /> : <Home />}
           />
         </Routes>
         </Box>

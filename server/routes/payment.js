@@ -1,10 +1,23 @@
+const express = require("express");
+const router = express.Router();
+const {userModel} = require("../config/database");
+const passport = require("passport");
+const { hashSync, compareSync } = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
 const Razorpay = require('razorpay');
 const {paymentPlans} =require("../data/paymentPlans.js");
-const router = require("express").Router();
 const {Order,User} = require("../mongoose-config");
 const {setVpnExp} =require("../routes/api")
 const moment = require("moment");
   
+router.all("/", (req, res) => {
+  res.send("account route");
+});
+
+router.all("/check", (req, res) => {
+  console.log(req.body);
+});
 
 //-----------------------------Plans--------------------------------//
 router.post("/plans",(req,res)=>{
