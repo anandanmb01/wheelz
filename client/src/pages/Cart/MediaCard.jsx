@@ -17,6 +17,9 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { CartContext } from "../../context/CartContext";
 import Stack from "@mui/material/Stack";
+import shadows from "@mui/material/styles/shadows";
+import CheckIcon from '@mui/icons-material/Check';
+
 
 function MediaCard(props) {
   const { cart, setCart } = React.useContext(CartContext);
@@ -30,7 +33,7 @@ function MediaCard(props) {
   };
 
   return (
-    <Paper elevation={1} sx={[{ p: 1 }, { "&:hover": { boxShadow: 3 } }]}>
+    <Paper elevation={props.checkout ? 0 : 1} p={1} sx={props.checkout ? {} : [{ "&:hover": { boxShadow: 3 } }]}>
       <Grid container spacing={2}>
         <Grid
           item
@@ -124,7 +127,8 @@ function MediaCard(props) {
             alignItems: "center",
           }}
         >
-          <ButtonGroup
+          {props.checkout ? <Typography variant="h6">{`${cart[props.data._id].order.count}`}</Typography> :
+            <ButtonGroup
             variant="text"
             aria-label="outlined button group"
             sx={{ mx: "25%" }}
@@ -182,7 +186,7 @@ function MediaCard(props) {
             >
               <AddIcon />
             </IconButton>
-          </ButtonGroup>
+          </ButtonGroup>}
         </Grid>
         <Grid
           item
@@ -235,18 +239,19 @@ function MediaCard(props) {
             alignItems: "center",
           }}
         >
-          <IconButton
-            aria-label="delete"
-            onClick={() => {
-              setCart((t) => {
-                let x = t;
-                delete x[props.data._id];
-                return { ...x };
-              });
-            }}
-          >
-            <DeleteIcon />
-          </IconButton>
+          {props.checkout ? <CheckIcon /> :
+            <IconButton
+              aria-label="delete"
+              onClick={() => {
+                setCart((t) => {
+                  let x = t;
+                  delete x[props.data._id];
+                  return { ...x };
+                });
+              }}
+            >
+              <DeleteIcon />
+            </IconButton>}
         </Grid>
       </Grid>
     </Paper>

@@ -3,23 +3,22 @@ import React from 'react';
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-
-const AddressForm = () => {
+const AddressForm = (props) => {
+  const [formContent, setFormContent] = React.useState(JSON.stringify(props.address)!== "{}" ? props.address:{
+    fname: "",
+    lname: "",
+    addr1: "",
+    addr2: "",
+    city: "",
+    postalcode: "",
+    state: "",
+    country: "",
+    mobile: "",
+    landmark: "",
+  });
 
   const formik = useFormik({
-    initialValues: {
-      fname: "",
-      lname: "",
-      addr1: "",
-      addr2: "",
-      city: "",
-      postalcode: "",
-      state: "",
-      country: "",
-      mobile: "",
-      landmark: "",
-
-    },
+    initialValues: formContent,
     validationSchema: Yup.object({
       fname: Yup.string().required(),
       lname: Yup.string().required(),
@@ -32,14 +31,16 @@ const AddressForm = () => {
       mobile: Yup.string().required(),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      props.setAddress(values);
+      window.sessionStorage.setItem('address',values);
+      document.getElementById('cart-page').scrollIntoView();
     },
   });
 
 
   return (
     <>
-      <Paper sx={{ minWidth: "800px" }}>
+      <Paper sx={{ minWidth: "800px" }} elevation={props.checkout ? 0 : 1} id={'billing-address-form'}>
         <Typography p={2} pt={3} variant="h5" fontWeight={'bold'}>Billing Address</Typography>
         <form onSubmit={formik.handleSubmit}>
 
@@ -50,7 +51,11 @@ const AddressForm = () => {
                 value={formik.values.fname}
                 helperText={formik.errors.fname}
                 error={Boolean(formik.touched.fname && formik.errors.fname)}
-                sx={{ width: "100%" }} label="First Name" variant="standard" />
+                sx={{ width: "100%" }} label="First Name" variant="standard"
+                InputProps={{
+                  readOnly: props.checkout ? true : false,
+                }}
+              />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField id="standard-basic" name="lname"
@@ -59,7 +64,11 @@ const AddressForm = () => {
                 helperText={formik.errors.lname}
                 error={Boolean(formik.touched.lname && formik.errors.lname)}
                 sx={{ width: "100%" }}
-                label="Last Name" variant="standard" />
+                label="Last Name" variant="standard"
+                InputProps={{
+                  readOnly: props.checkout ? true : false,
+                }}
+              />
 
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -69,7 +78,11 @@ const AddressForm = () => {
                 helperText={formik.errors.addr1}
                 error={Boolean(formik.touched.addr1 && formik.errors.addr1)}
                 sx={{ width: "100%" }}
-                label="Address Line 1" variant="standard" />
+                label="Address Line 1" variant="standard"
+                InputProps={{
+                  readOnly: props.checkout ? true : false,
+                }}
+              />
 
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -79,7 +92,11 @@ const AddressForm = () => {
                 helperText={formik.errors.addr2}
                 error={Boolean(formik.touched.addr2 && formik.errors.addr2)}
                 sx={{ width: "100%" }}
-                label="Address Line 2" variant="standard" />
+                label="Address Line 2" variant="standard"
+                InputProps={{
+                  readOnly: props.checkout ? true : false,
+                }}
+              />
 
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -89,7 +106,11 @@ const AddressForm = () => {
                 helperText={formik.errors.city}
                 error={Boolean(formik.touched.city && formik.errors.city)}
                 sx={{ width: "100%" }}
-                label="City" variant="standard" />
+                label="City" variant="standard"
+                InputProps={{
+                  readOnly: props.checkout ? true : false,
+                }}
+              />
 
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -99,7 +120,11 @@ const AddressForm = () => {
                 helperText={formik.errors.postalcode}
                 error={Boolean(formik.touched.postalcode && formik.errors.postalcode)}
                 sx={{ width: "100%" }}
-                label="Postal code" variant="standard" />
+                label="Postal code" variant="standard"
+                InputProps={{
+                  readOnly: props.checkout ? true : false,
+                }}
+              />
 
             </Grid>
             <Grid item xs={12} sm={4}>
@@ -109,7 +134,11 @@ const AddressForm = () => {
                 helperText={formik.errors.state}
                 error={Boolean(formik.touched.state && formik.errors.state)}
                 sx={{ width: "100%" }}
-                label="State" variant="standard" />
+                label="State" variant="standard"
+                InputProps={{
+                  readOnly: props.checkout ? true : false,
+                }}
+              />
 
             </Grid>
             <Grid item xs={12} sm={4}>
@@ -119,7 +148,11 @@ const AddressForm = () => {
                 helperText={formik.errors.country}
                 error={Boolean(formik.touched.country && formik.errors.country)}
                 sx={{ width: "100%" }}
-                label="Country" variant="standard" />
+                label="Country" variant="standard"
+                InputProps={{
+                  readOnly: props.checkout ? true : false,
+                }}
+              />
 
             </Grid>
             <Grid item xs={12} sm={4}>
@@ -129,7 +162,11 @@ const AddressForm = () => {
                 helperText={formik.errors.mobile}
                 error={Boolean(formik.touched.mobile && formik.errors.mobile)}
                 sx={{ width: "100%" }}
-                label="Mobile" variant="standard" />
+                label="Mobile" variant="standard"
+                InputProps={{
+                  readOnly: props.checkout ? true : false,
+                }}
+              />
 
             </Grid>
             <Grid item xs={12} sm={12}>
@@ -139,18 +176,22 @@ const AddressForm = () => {
                 helperText={formik.errors.landmark}
                 error={Boolean(formik.touched.landmark && formik.errors.landmark)}
                 sx={{ width: "100%" }}
-                label="Land Mark" variant="standard" />
+                label="Land Mark" variant="standard"
+                InputProps={{
+                  readOnly: props.checkout ? true : false,
+                }}
+              />
 
             </Grid>
 
 
           </Grid>
           <Stack p={2} pb={3}
-          direction="row"
-          justifyContent="flex-end"
-          alignItems="center"
-          spacing={2}>
-          <Button type='submit' variant='outlined' size='smallsss'>submit</Button>
+            direction="row"
+            justifyContent="flex-end"
+            alignItems="center"
+            spacing={2}>
+            {props.checkout ? <></> : <Button type='submit' variant='outlined' size='small'>continue</Button>}
           </Stack>
         </form>
       </Paper>

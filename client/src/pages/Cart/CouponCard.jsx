@@ -25,10 +25,10 @@ const CouponCard = (props) => {
 
     return (
         <Box boxShadow={1} minWidth={'207px'}>
-            <Stack direction={'row'} justifyContent={'space-around'} p={1}>
+            <Stack direction={'row'} justifyContent={'space-around'} p={0}>
                 <LocalOfferIcon />
                 <Typography variant='subtitle2' px={1}>{`${props.data.name}`}</Typography>
-                <IconButton onClick={() => { handleClose() }}>
+                <IconButton onClick={() => { handleClose() }} sx={{ visibility: props.checkout ? "hidden" : "visible" }}>
                     <CloseIcon fontSize='small' px={1} />
                 </IconButton>
             </Stack>

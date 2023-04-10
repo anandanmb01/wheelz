@@ -12,7 +12,7 @@ const {setVpnExp} =require("../routes/api")
 const moment = require("moment");
   
 router.all("/", (req, res) => {
-  res.send("account route");
+  res.send("payment route");
 });
 
 router.all("/check", (req, res) => {
@@ -20,10 +20,6 @@ router.all("/check", (req, res) => {
 });
 
 //-----------------------------Plans--------------------------------//
-router.post("/plans",(req,res)=>{
-  res.json(paymentPlans);
-})
-
 
 router.post('/getRazorpayKey', (req, res) => {
   res.send({ key: process.env.RAZORPAY_KEY_ID });

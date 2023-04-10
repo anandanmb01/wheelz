@@ -8,6 +8,8 @@ import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import axios from "axios";
 import axiosConfig from "../../utilities/axiosConfig";
 import { NotificationPropContext } from "../../context/NotificationPropContext";
+import { useNavigate } from "react-router-dom";
+
 
 const calculateTotal = (cart) => {
   let out = 0;
@@ -28,19 +30,55 @@ const calculateDiscount = (coupenList) => {
 }
 
 
-
-
-const SummaryPage = () => {
+const SummaryPage = (props) => {
   const { setNotificationProp } = React.useContext(NotificationPropContext);
   const [coupenList, setCoupenList] = React.useState([]);
   const { cart } = React.useContext(CartContext);
   const [coupenCode, setCoupenCode] = React.useState("");
-
+  const navigator = useNavigate();
   let price = calculateTotal(cart);
   let tax = calculateTotal(cart) * 0.05;
   let coupenprice = calculateDiscount(coupenList) * price;
   let localAmount = price + tax + coupenprice;
 
+
+  const handleCheckout = () => {
+    if (props.checkout) { 
+      console.log('In checkout');
+    } else {
+      if (JSON.stringify(props.address) === JSON.stringify({})) {
+        document.getElementById('billing-address-form').scrollIntoView();
+
+      } else {
+
+        let res = {
+          cart: [],
+          coupen: [],
+          address: props.address,
+        }
+        Object.keys(cart).forEach(key => {
+          res.cart.push(
+            {
+              _id: key,
+              count: cart[key].order.count,
+              color: cart[key].order.color,
+            });
+        });
+
+        for (let key of coupenList) {
+          res.coupen.push(
+            {
+              _id: key._id,
+            });
+
+        }
+        console.log(res);
+        navigator('/checkout')
+        alert('ok');
+      }
+    }
+
+  }
 
 
   const handleCoupenClick = () => {
@@ -139,9 +177,13 @@ const SummaryPage = () => {
         </Stack>
         <Divider />
         <Stack direction={"column"} spacing={2} pt={2}>
-          <Button variant="outlined">checkout</Button>
+          <Button variant="outlined" onClick={handleCheckout}>{props.checkout ? "buy now" : "checkout"}</Button>
 
           {/*  */}
+
+          {props.checkout && (coupenList.length > 0) ? <Typography variant="h6" component={"span"} sx={{ visibility: 'visible', color: 'grey', pt: 2 }}>
+            Active coupons
+          </Typography> : <></>}
 
           <Stack
             direction={"row"}
@@ -158,13 +200,13 @@ const SummaryPage = () => {
             </Typography>
             <Stack direction={'column'} spacing={2}>
               {coupenList.map((d, i) => {
-                return <CouponCard key={i} data={d} cl={setCoupenList} />
+                return <CouponCard checkout={props.checkout} key={i} data={d} cl={setCoupenList} />
               })}
             </Stack>
 
           </Stack>
 
-          <Stack
+          {props.checkout ? <></> : <Stack
             direction={"row"}
             justifyContent={"space-between"}
             px={2}
@@ -188,7 +230,7 @@ const SummaryPage = () => {
             />
             {coupenCode !== "" && <IconButton onClick={handleCoupenClick}> <TaskAltIcon fontSize="small" color="success" /> </IconButton>}
 
-          </Stack>
+          </Stack>}
         </Stack>
       </Stack>
     </>

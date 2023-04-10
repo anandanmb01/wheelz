@@ -82,7 +82,9 @@ function App() {
         <Box sx={{minHeight:'calc(100vh - 192px)'}}>
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route path="/cart" element={true ? <CartPage /> : <Home />} />
+          <Route path="/cart" element={true ? <CartPage  checkout={false}/> : <Home />} />
+          <Route path="/checkout" element={true ? <CartPage  checkout={true}/> : <Home />} />
+          
           <Route
             path="/category/:categoryName"
             element={true ? <CategoryProductList /> : <Home />}

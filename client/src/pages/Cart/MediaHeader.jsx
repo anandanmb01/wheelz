@@ -1,7 +1,7 @@
 import { Paper, Grid, Typography } from "@mui/material";
 import React from "react";
 
-function MediaHeader() {
+function MediaHeader(props) {
   return (
     <Paper elevation={0} sx={{ p: 0 }}>
       <Grid container spacing={2}>
@@ -92,7 +92,7 @@ function MediaHeader() {
             component={"span"}
             sx={{ fontWeight: "bold" }}
           >
-            Icon
+            {props.checkout ? "Status" : "Remove"}
           </Typography>
         </Grid>
       </Grid>
