@@ -10,6 +10,8 @@ const carRoute = require("./routes/carRoute");
 const vendorRoute = require("./routes/vendorRoute");
 const adminRoute = require("./routes/adminRoute");
 const commandRoute = require("./routes/commandRoute");
+const paymentRoute = require("./routes/paymentRoute");
+
 
 const app = express();
 const port = 5000;
@@ -68,6 +70,12 @@ app.use(
   "/api/command",
   passport.authenticate("jwt", { session: false }),
   commandRoute
+);
+
+app.use(
+  "/api/payment",
+  passport.authenticate("jwt", { session: false }),
+  paymentRoute
 );
 
 app.listen(port, () => {

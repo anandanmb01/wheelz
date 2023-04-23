@@ -10,7 +10,6 @@ import axiosConfig from "../../utilities/axiosConfig";
 import { NotificationPropContext } from "../../context/NotificationPropContext";
 import { useNavigate } from "react-router-dom";
 
-
 const calculateTotal = (cart) => {
   let out = 0;
   for (let item in cart) {
@@ -31,6 +30,7 @@ const calculateDiscount = (coupenList) => {
 
 
 const SummaryPage = (props) => {
+  const [loading, setLoading] = React.useState(true);
   const { setNotificationProp } = React.useContext(NotificationPropContext);
   const [coupenList, setCoupenList] = React.useState([]);
   const { cart } = React.useContext(CartContext);
@@ -42,39 +42,110 @@ const SummaryPage = (props) => {
   let localAmount = price + tax + coupenprice;
 
 
+  let res = {
+    cart: [],
+    coupen: [],
+    address: props.address,
+  }
+
+
+  function loadRazorpay() {
+
+
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.onerror = () => {
+
+
+      setNotificationProp({
+        open_: true,
+        severity: "error",
+        message: "Razorpay SDK failed to load. Are you online?",
+      });
+    };
+    script.onload = async () => {
+      try {
+        setLoading(true);
+
+
+        const result = await axios.post(window.serverUrl + '/api/payment/createOrder', res, axiosConfig)
+
+        const { amount, id: order_id, currency } = result.data;
+        const {
+          data: { key: razorpayKey },
+        } = await axios.post(window.serverUrl + '/api/payment/getRazorpayKey');
+
+        const options = {
+          key: razorpayKey,
+          amount: amount,
+          currency: currency,
+          name: 'Wheelz',
+          description: 'Wheelz payment portal powered by razopay',
+          order_id: order_id,
+          handler: async function (response) {
+            const result = await axios.post(window.serverUrl + '/api/payment/payOrder', {
+              amount: amount,
+              planId: props.data.planId,
+              // hub: hubSelect,
+              razorpayPaymentId: response.razorpay_payment_id,
+              razorpayOrderId: response.razorpay_order_id,
+              razorpaySignature: response.razorpay_signature,
+            });
+            // setAlert(result.data.msg);
+            props.setPaymentPlan(false);
+            window.location.reload(false);
+          },
+          prefill: {
+            name: 'example name',
+            email: 'email@example.com',
+            contact: '111111',
+          },
+          notes: {
+            address: 'example address',
+          },
+          theme: {
+            color: '#80c0f0',
+          },
+        };
+
+        setLoading(false);
+        const paymentObject = new window.Razorpay(options);
+        paymentObject.open();
+      } catch (err) {
+        // setAlert(err);
+        setLoading(false);
+      }
+    };
+    document.body.appendChild(script);
+  }
+
   const handleCheckout = () => {
-    if (props.checkout) { 
-      console.log('In checkout');
+    if (props.checkout) {
+      Object.keys(cart).forEach(key => {
+        res.cart.push(
+          {
+            _id: key,
+            count: cart[key].order.count,
+            color: cart[key].order.color,
+          });
+      });
+
+      for (let key of coupenList) {
+        res.coupen.push(
+          {
+            _id: key._id,
+          });
+
+      }
+      console.log(res);
+
+
     } else {
       if (JSON.stringify(props.address) === JSON.stringify({})) {
         document.getElementById('billing-address-form').scrollIntoView();
 
       } else {
-
-        let res = {
-          cart: [],
-          coupen: [],
-          address: props.address,
-        }
-        Object.keys(cart).forEach(key => {
-          res.cart.push(
-            {
-              _id: key,
-              count: cart[key].order.count,
-              color: cart[key].order.color,
-            });
-        });
-
-        for (let key of coupenList) {
-          res.coupen.push(
-            {
-              _id: key._id,
-            });
-
-        }
-        console.log(res);
         navigator('/checkout')
-        alert('ok');
       }
     }
 
